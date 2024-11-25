@@ -1,23 +1,77 @@
 from settings import *
+import random
 
 class Block(pygame.sprite.Sprite): # for the sprite of the object
     def __init__(self, tetro, pos):
         self.tetro = tetro
-        super().__init__()
+        self.pos = vec(pos) + INIT_OFFSET
+        self.alive = True
+
+
+        # Set the sprite
+        super().__init__(tetro.tetris.sprites)
         self.image = pygame.Surface([TILE_SIZE, TILE_SIZE])
-        self. image.fill("orange")
-
+        self.image.fill(tetro.color)
         self.rect = self.image.get_rect()
-        self.rect.topleft = pos[0] * TILE_SIZE, pos[1] * TILE_SIZE
 
+    def is_alive(self):
+        if not self.alive:
+            self.kill()
 
+    # Rotate the object 90 degrees
+    def rotate(self, pivot_pos):
+        return (self.pos - pivot_pos).rotate(90) + pivot_pos
 
+    # Return a bool of if the block is in a valid position
+    def is_collide(self, pos):
+        x, y = int(pos.x), int(pos.y)
+        if 0 <= x < FIELD_W and (y < 0 or (y < FIELD_H and not self.tetro.tetris.field[y][x])):
+            return False
+        return True
 
+    def set_pos(self):
+        self.rect.topleft = self.pos * TILE_SIZE
+
+    def update(self):
+        self.is_alive()
+        self.set_pos()
 
 class Tetro:
     def __init__(self, tetris):
         self.tetris = tetris
-        Block(self, (4, 7))
+        self.type = random.choice(list(SHAPES.keys()))
+        self.color = random.choice(COLOR)
+        self.grounded = False
+        self.shape = [Block(self, pos) for pos in SHAPES[self.type]]
+
+
+    def rotate(self):
+        pivot_pos = self.shape[0].pos
+        new_pos = [block.rotate(pivot_pos) for block in self.shape]
+
+        if not self.is_collide(new_pos):
+            for i, block in enumerate(self.shape):
+                block.pos = new_pos[i]
+
+    def is_collide(self, block_pos):
+        # Use a map to determine if there are any blocks in the shape colliding
+        for block, pos in zip(self.shape, block_pos):
+            if block.is_collide(pos):
+                return True
+        return False
+
+    # move the shape
+    def move(self, direction):
+        move_direction = DIRECTION_KEYS[direction]
+        new_pos = [block.pos + move_direction for block in self.shape]
+
+
+        # Check if the new pos are valid
+        if not self.is_collide(new_pos):
+            for block in self.shape:
+                block.pos += move_direction
+        elif direction == 'D':
+            self.grounded = True
 
     def update(self):
-        pass
+        self.move('D')
