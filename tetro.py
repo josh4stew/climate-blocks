@@ -11,7 +11,7 @@ class Block(pygame.sprite.Sprite): # for the sprite of the object
         # Set the sprite
         super().__init__(tetro.tetris.sprites)
         self.image = pygame.Surface([TILE_SIZE, TILE_SIZE])
-        self.image.fill(tetro.color)
+        pygame.draw.rect(self.image, tetro.color, (1, 1, TILE_SIZE - 2, TILE_SIZE - 2), border_radius=8)
         self.rect = self.image.get_rect()
 
     def is_alive(self):
