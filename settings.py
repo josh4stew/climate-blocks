@@ -32,3 +32,9 @@ SHAPES = {
     'J': [(0, 0), (0, -1), (0, -2), (-1, 0)],
     'T': [(0, 0), (0, -1), (1, -1), (-1, -1)]
 }
+
+QUESTIONS = [
+    ('A)', "This is my question about climate change A) Right answer, B) Wrong answer, C) Wrong answer"),
+    ('B)', "This is my question about climate change A) Wrong answer, B) Right answer, C) Wrong answer"),
+    ('C)', "This is my question about climate change A) Wrong answer, B) Wrong answer, C) Right answer")
+]

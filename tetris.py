@@ -1,16 +1,17 @@
-import pygame
-
 from settings import *
-import math
 from tetro import Tetro
+from question import Prompt
 
 class Tetris:
     def __init__(self, game):
         self.game = game
+        self.score = 0
         self.sprites = pygame.sprite.Group()
         # Field keeps track of blocks placed in the field
         self.field = [[0 for x in range(FIELD_W)] for y in range(FIELD_H)]
         self.tetro = Tetro(self)
+        self.ask_question = False
+        self.prompt = Prompt(self.game)
 
     def drop_in_field(self):
         for block in self.tetro.shape:
@@ -39,6 +40,10 @@ class Tetris:
                 for x in range(FIELD_W):
                     self.field[0][x] = 0
 
+                self.prompt.active = True
+
+                break  # Only handle one row per frame
+
 
     def check_grounded(self):
         if self.tetro.grounded:
@@ -46,7 +51,7 @@ class Tetris:
             self.tetro = Tetro(self)
 
     # Create the background grid
-    def create_grid(self):
+    def draw_grid(self):
         for x in range(FIELD_W):
             for y in range(FIELD_H):
                 rect = pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE) # the size of each rectangle
@@ -62,12 +67,15 @@ class Tetris:
             self.tetro.rotate()
 
     def update(self):
-        if self.game.anim_flag:
+        if self.game.anim_flag and not self.prompt.active:
             self.check_rows()
             self.tetro.update()
             self.check_grounded()
-        self.sprites.update()
+            self.sprites.update()
 
     def draw(self):
-        self.create_grid()
-        self.sprites.draw(self.game.screen)
+        if self.prompt.active:
+            self.prompt.draw()
+        else:
+            self.draw_grid()
+            self.sprites.draw(self.game.screen)

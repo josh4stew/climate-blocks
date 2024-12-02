@@ -24,6 +24,8 @@ class Game:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif self.tetris.prompt.active:
+                self.tetris.prompt.handle_event(event)
             elif event.type == pygame.KEYDOWN:
                 self.tetris.shift(event.key)
             elif event.type == self.user_event:
