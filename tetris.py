@@ -8,24 +8,27 @@ class Tetris:
         self.score = 0
         self.level = 1
         self.sprites = pygame.sprite.Group()
-        # Field keeps track of blocks placed in the field
+        # Field logs the location of grounded blocks
         self.field = [[0 for x in range(FIELD_W)] for y in range(FIELD_H)]
         self.tetro = Tetro(self)
         self.ask_question = False
         self.prompt = Prompt(self.game)
-        self.prompt.active = True
+        # self.prompt.active = True
 
+    # Update the level
     def check_level(self):
         if self.score / 200 >= self.level:
             self.level += 1
             # speed up the blocks
             pygame.time.set_timer(self.game.user_event, ANIM_TIME - (self.level*10))
 
+    # Detect when the game is over
     def is_game_over(self):
         if self.tetro.shape[0].pos.y == INIT_OFFSET[1]:
             pygame.time.wait(300)
             return True
 
+    # Place the shape in the field
     def drop_in_field(self):
         for block in self.tetro.shape:
             x, y = int(block.pos.x), int(block.pos.y)
@@ -39,7 +42,7 @@ class Tetris:
             if all(self.field[y][x] for x in range(FIELD_W)):
                 # Mark blocks in this row as dead and clear the row
                 for x in range(FIELD_W):
-                    self.field[y][x].alive = False  # Assuming blocks have an `alive` attribute
+                    self.field[y][x].alive = False  # Mark all block in the row as dead (assuming they are alive
                     self.field[y][x] = 0
 
                 # Shift rows down
@@ -53,10 +56,10 @@ class Tetris:
                 for x in range(FIELD_W):
                     self.field[0][x] = 0
 
+                # Ask a question
                 self.prompt.active = True
 
                 break  # Only handle one row per frame
-
 
     def check_grounded(self):
         if self.tetro.grounded:
@@ -64,6 +67,7 @@ class Tetris:
             if self.is_game_over():
                 self.__init__(self.game)
             else:
+                # grounded shapes location is tracked in the field
                 self.drop_in_field()
                 self.tetro = Tetro(self)
 
@@ -74,7 +78,7 @@ class Tetris:
                 rect = pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE) # the size of each rectangle
                 pygame.draw.rect(self.game.screen, "white", rect, 1)
 
-    # shift the block left or right
+    # Move the block left, right, or rotate
     def shift(self, key):
         if key == pygame.K_LEFT or key == pygame.K_a:
             self.tetro.move('L')
@@ -83,6 +87,7 @@ class Tetris:
         elif key == pygame.K_UP or key == pygame.K_s:
             self.tetro.rotate()
 
+    # Call update functions
     def update(self):
         if self.game.anim_flag and not self.prompt.active:
             self.check_rows()
@@ -91,10 +96,11 @@ class Tetris:
             self.sprites.update()
             self.check_level()
 
+    # Call draw functions
     def draw(self):
         if self.prompt.active:
             self.prompt.draw()
         else:
             self.draw_grid()
             self.sprites.draw(self.game.screen)
-        self.prompt.draw_extend_text()
+        self.prompt.draw_extend_text() # always draw the extend text

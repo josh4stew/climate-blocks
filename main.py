@@ -2,6 +2,7 @@ import sys
 
 from settings import *
 from tetris import Tetris
+import pathlib
 
 class Game:
     def __init__(self):
@@ -15,9 +16,18 @@ class Game:
         self.anim_flag = False
         pygame.time.set_timer(self.user_event, ANIM_TIME)
 
+        self.image = self.load_image()
+
         self.tetris = Tetris(self)
 
-    # To read player inputs
+    # load sprites for falling tetris blocks
+    def load_image(self):
+        files = [item for item in pathlib.Path(SPRITE_PATH).rglob('*.png') if item.is_file()]
+        images = [pygame.image.load(file).convert_alpha() for file in files]
+        images = [pygame.transform.scale(image, (TILE_SIZE, TILE_SIZE)) for image in images]
+        return images
+
+    # Read player inputs
     def check_events(self):
         self.anim_flag = False
         for event in pygame.event.get():
@@ -35,14 +45,12 @@ class Game:
     def update(self):
         self.tetris.update()
         self.clock.tick(FPS)
-        # pygame.time.set_timer(self.user_event, ANIM_TIME // self.tetris.level)
 
     # draw grid and sprites
     def draw(self):
         self.screen.fill(color=EXTEND_BG_COLOR)
         self.screen.fill(color=BG_COLOR, rect=(0, 0, *FIELD_RES))
         self.tetris.draw()
-        # corrects orientation
         pygame.display.flip()
 
     def run(self):

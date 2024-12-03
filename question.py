@@ -14,10 +14,10 @@ class Prompt:
 
         # Define button dimensions and positions
         x_start = FIELD_RES[0] / 2.5
-        button_width = 100
+        button_width = TILE_SIZE*2
         spacing = TILE_SIZE
         offset = FIELD_RES[1] * 3 // 4
-        button_height = 40
+        button_height = TILE_SIZE
         self.highlight_button = 0
 
         self.buttons = [
@@ -95,7 +95,7 @@ class Prompt:
         self.game.tetris.sprites.draw(self.menu_surface)
 
         # Define the area for text
-        rect = Rect(50, 50, 300, FIELD_RES[1] - 100)
+        rect = Rect(TILE_SIZE, TILE_SIZE, FIELD_RES[0]-TILE_SIZE, FIELD_RES[1] - TILE_SIZE*2)
 
         # Call the function to display the text
         self.draw_question(self.menu_surface, self.question[1], "black", rect, self.font)
@@ -114,12 +114,12 @@ class Prompt:
 
     def handle_event(self, event):
         if event.type == pygame.KEYDOWN:
-            # Navigate buttons with UP and DOWN arrows
+            # Navigate buttons with UP and DOWN arrows rotate with UP arrow
             if event.key == pygame.K_LEFT:
                 self.highlight_button = (self.highlight_button - 1) % len(self.buttons)  # Wrap around
             elif event.key == pygame.K_RIGHT:
                 self.highlight_button = (self.highlight_button + 1) % len(self.buttons)  # Wrap around
-            elif event.key == pygame.K_UP:  # Select the active button
+            elif event.key == pygame.K_UP:
                 active_button = self.buttons[self.highlight_button]
                 self.handle_button_click(active_button['label'])
                 self.question = random.choice(QUESTIONS)

@@ -1,7 +1,7 @@
 from settings import *
 import random
 
-class Block(pygame.sprite.Sprite): # for the sprite of the object
+class Block(pygame.sprite.Sprite): # For the sprite of the object
     def __init__(self, tetro, pos):
         self.tetro = tetro
         self.pos = vec(pos) + INIT_OFFSET
@@ -10,10 +10,12 @@ class Block(pygame.sprite.Sprite): # for the sprite of the object
 
         # Set the sprite
         super().__init__(tetro.tetris.sprites)
-        self.image = pygame.Surface([TILE_SIZE, TILE_SIZE])
-        pygame.draw.rect(self.image, tetro.color, (1, 1, TILE_SIZE - 2, TILE_SIZE - 2), border_radius=8)
+        self.image = tetro.image
+        # self.image = pygame.Surface([TILE_SIZE, TILE_SIZE])
+        # pygame.draw.rect(self.image, tetro.color, (1, 1, TILE_SIZE - 2, TILE_SIZE - 2), border_radius=8)
         self.rect = self.image.get_rect()
 
+    # Remove dead bocks
     def is_alive(self):
         if not self.alive:
             self.kill()
@@ -40,7 +42,8 @@ class Tetro:
     def __init__(self, tetris):
         self.tetris = tetris
         self.type = random.choice(list(SHAPES.keys()))
-        self.color = random.choice(COLOR)
+        self.image = random.choice(tetris.game.image)
+        # self.color = random.choice(COLOR)
         self.grounded = False
         self.shape = [Block(self, pos) for pos in SHAPES[self.type]]
 
