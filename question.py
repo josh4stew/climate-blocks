@@ -87,12 +87,13 @@ class Prompt:
             text=str(self.game.tetris.score), fgcolor='white',
             size=TILE_SIZE * 1.8)
 
+
     def draw(self):
         # Background of the menu
         self.menu_surface.fill("light gray")
 
         # draw the tetris blocks
-        self.game.tetris.sprites.draw(self.menu_surface)
+        # self.game.tetris.sprites.draw(self.menu_surface)
 
         # Define the area for text
         rect = Rect(TILE_SIZE, TILE_SIZE, FIELD_RES[0]-TILE_SIZE, FIELD_RES[1] - TILE_SIZE*2)

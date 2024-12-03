@@ -1,3 +1,5 @@
+import pygame
+
 from settings import *
 from tetro import Tetro
 from question import Prompt
@@ -13,7 +15,15 @@ class Tetris:
         self.tetro = Tetro(self)
         self.ask_question = False
         self.prompt = Prompt(self.game)
+        self.speed_up = False
         # self.prompt.active = True
+
+    # fast fall or normal fall
+    def check_fast_fall(self):
+        if (self.speed_up):
+            pygame.time.set_timer(self.game.user_event, 10)
+        else:
+            pygame.time.set_timer(self.game.user_event, ANIM_TIME - (self.level*10))
 
     # Update the level
     def check_level(self):
@@ -84,8 +94,10 @@ class Tetris:
             self.tetro.move('L')
         elif key == pygame.K_RIGHT or key == pygame.K_d:
             self.tetro.move('R')
-        elif key == pygame.K_UP or key == pygame.K_s:
+        elif key == pygame.K_UP or key == pygame.K_w:
             self.tetro.rotate()
+        elif key == pygame.K_DOWN or key == pygame.K_s:
+            self.speed_up = True
 
     # Call update functions
     def update(self):
@@ -95,6 +107,8 @@ class Tetris:
             self.check_grounded()
             self.sprites.update()
             self.check_level()
+            self.check_fast_fall()
+            self.prompt.active = True
 
     # Call draw functions
     def draw(self):

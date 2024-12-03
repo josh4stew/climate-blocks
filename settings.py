@@ -28,7 +28,7 @@ WIN_RES = WIN_W, WIN_H = FIELD_RES[0] * FIELD_EXTEND_W, FIELD_RES[1] * FIELD_EXT
 INIT_OFFSET = vec(FIELD_W // 2, 0)
 
 # Value for the time interval in milliseconds
-ANIM_TIME = 150
+ANIM_TIME = 200
 
 # The key is the direction the value is how much it is moved
 DIRECTION_KEYS = {'L' : vec(-1, 0), 'R': vec(1, 0), 'D': vec(0, 1)}
@@ -95,4 +95,12 @@ QUESTIONS = [
     ('C)', "What is the best way to reduce plastic pollution? A) Dump plastic waste in landfills B) Burn plastic waste C) Ban single-use plastics"),
     ('B)', "Which of the following gases contributes to ocean acidification? A) Methane B) Carbon dioxide C) Nitrogen"),
     ('C)', "What is the main purpose of renewable energy? A) Generate profit for corporations B) Increase fossil fuel use C) Reduce environmental impact"),
+]
+
+
+
+QUESTIONS = [
+    ('B)', "What is the primary cause of global warming?", "A) Deforestation", "B) Greenhouse gases", "C) Overpopulation"),
+    ('C)', "Which of the following is not a fossil fuel?", "A) Oil", "B) Coal", "C) Wind"),
+    ('A)', "Which type of pollution is caused by excessive sound?", "A) Noise pollution", "B) Air pollution", "C) Soil pollution"),
 ]

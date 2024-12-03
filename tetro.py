@@ -43,7 +43,6 @@ class Tetro:
         self.tetris = tetris
         self.type = random.choice(list(SHAPES.keys()))
         self.image = random.choice(tetris.game.image)
-        # self.color = random.choice(COLOR)
         self.grounded = False
         self.shape = [Block(self, pos) for pos in SHAPES[self.type]]
 
@@ -74,6 +73,7 @@ class Tetro:
             for block in self.shape:
                 block.pos += move_direction
         elif direction == 'D':
+            self.tetris.speed_up = False
             self.grounded = True
 
     def update(self):
