@@ -108,7 +108,7 @@ class Tetris:
             self.sprites.update()
             self.check_level()
             self.check_fast_fall()
-            self.prompt.active = True
+            # self.prompt.active = True
 
     # Call draw functions
     def draw(self):

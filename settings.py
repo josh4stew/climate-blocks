@@ -96,11 +96,3 @@ QUESTIONS = [
     ('B)', "Which of the following gases contributes to ocean acidification? A) Methane B) Carbon dioxide C) Nitrogen"),
     ('C)', "What is the main purpose of renewable energy? A) Generate profit for corporations B) Increase fossil fuel use C) Reduce environmental impact"),
 ]
-
-
-
-QUESTIONS = [
-    ('B)', "What is the primary cause of global warming?", "A) Deforestation", "B) Greenhouse gases", "C) Overpopulation"),
-    ('C)', "Which of the following is not a fossil fuel?", "A) Oil", "B) Coal", "C) Wind"),
-    ('A)', "Which type of pollution is caused by excessive sound?", "A) Noise pollution", "B) Air pollution", "C) Soil pollution"),
-]
