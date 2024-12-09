@@ -1,5 +1,3 @@
-import pygame
-
 from settings import *
 from tetro import Tetro
 from question import Prompt

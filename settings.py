@@ -5,8 +5,6 @@ FPS = 60
 BG_COLOR = (48, 39, 32)
 # Extend color
 EXTEND_BG_COLOR = (24, 89, 117)
-# Shape colors
-COLOR = "orange", "cyan", "purple", "red", "blue", "green", "yellow"
 
 # Font file path
 FONT_PATH = "suissnord.otf"
@@ -27,8 +25,8 @@ WIN_RES = WIN_W, WIN_H = FIELD_RES[0] * FIELD_EXTEND_W, FIELD_RES[1] * FIELD_EXT
 # The inital offset is set for the top middle of the screen
 INIT_OFFSET = vec(FIELD_W // 2, 0)
 
-# Value for the time interval in milliseconds
-ANIM_TIME = 200
+#
+ANIM_TIME = 250
 
 # The key is the direction the value is how much it is moved
 DIRECTION_KEYS = {'L' : vec(-1, 0), 'R': vec(1, 0), 'D': vec(0, 1)}

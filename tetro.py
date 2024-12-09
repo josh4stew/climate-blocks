@@ -13,7 +13,7 @@ class Block(pygame.sprite.Sprite): # For the sprite of the object
         self.image = tetro.image
         # self.image = pygame.Surface([TILE_SIZE, TILE_SIZE])
         # pygame.draw.rect(self.image, tetro.color, (1, 1, TILE_SIZE - 2, TILE_SIZE - 2), border_radius=8)
-        self.rect = self.image.get_rect()
+        self.rect = tetro.image.get_rect()
 
     # Remove dead bocks
     def is_alive(self):
